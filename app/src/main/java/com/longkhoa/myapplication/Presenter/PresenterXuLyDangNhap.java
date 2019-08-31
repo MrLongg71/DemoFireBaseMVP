@@ -1,42 +1,37 @@
 package com.longkhoa.myapplication.Presenter;
 
-import android.content.Intent;
+import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.longkhoa.myapplication.Main3Activity;
-import com.longkhoa.myapplication.MainActivity;
+import com.longkhoa.myapplication.Model.ModelXuLyDangNhap;
 import com.longkhoa.myapplication.View.ViewXuLyDangNhap;
 
-public class PresenterXuLyDangNhap implements PresenterImDangNhap {
+public class PresenterXuLyDangNhap implements PresenterImDangNhap{
     ViewXuLyDangNhap viewXuLyDangNhap;
-    private FirebaseAuth firebaseAuth;
+    ModelXuLyDangNhap ac;
+
+
 
     public PresenterXuLyDangNhap(ViewXuLyDangNhap viewXuLyDangNhap) {
         this.viewXuLyDangNhap = viewXuLyDangNhap;
+        this.ac = new ModelXuLyDangNhap();
+
     }
+
 
     @Override
     public void ktDangNhap(String tk, String mk) {
-        if (tk.length() == 0 || mk.length() == 0) {
+        ac.halderDangnhap(tk,mk,this);
+
+        }
+
+    @Override
+    public void result(boolean a) {
+        Log.d("vv" , a + "");
+        if(a){
+            viewXuLyDangNhap.dangNhapThanhCong();
+        }else {
             viewXuLyDangNhap.dangNhapThatBai();
-        } else {
-            firebaseAuth = FirebaseAuth.getInstance();
-            firebaseAuth.signInWithEmailAndPassword(tk, mk)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                viewXuLyDangNhap.dangNhapThanhCong();
-                            } else {
-//                                        Toast.makeText(MainActivity.this, "Đăng Ký Lại Tài khoản", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
         }
     }
 }
+

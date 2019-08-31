@@ -1,8 +1,10 @@
-package com.longkhoa.myapplication;
+package com.longkhoa.myapplication.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.longkhoa.myapplication.R;
 
 public class Main3Activity extends AppCompatActivity {
 
